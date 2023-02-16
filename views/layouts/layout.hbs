@@ -3,13 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <title>{{title}}</title>
+    {{{_sections.css}}}
 </head>
 <body>
-<header>헤더</header>
+{{> header }}
+
 
 {{{ body }}}
+{{{_sections.script}}}
 
-<footer>푸터</footer>
+{{> footer }}
+
 
 </body>
 </html>

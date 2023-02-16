@@ -15,7 +15,15 @@ const port = process.env.PORT || 3000;
 //view템프릿 엔진 설정
 app.engine('hbs',engine({ //hbs엔진으로 이름
     extname:'.hbs',
-    defaultLayout:'layout' //디폴트 서정안하면 메인으로 뜬다
+    defaultLayout:'layout', //디폴트 서정안하면 메인으로 뜬다
+    helpers: {
+        section: function(name, options) {
+            if(!this._sections) this._sections = {}
+            this._sections[name] = options.fn(this)
+            return null
+        },
+    },
+
 }));
 
 app.set('views',path.join(__dirname,'views'));

@@ -1,15 +1,15 @@
-<!DOCTYPE html>
-<html lang="ko">
-<head>
-    <meta charset="UTF-8">
-    <title>{{title}}</title>
-</head>
-<body>
-<header>헤더</header>
 
-{{{ body }}}
+{{#section 'css'}}
+    <style>
+        h1{color:green}
+    </style>
 
-<footer>푸터</footer>
+{{/section}}
 
-</body>
-</html>
+{{#section 'script'}}
+    <script>
+        alert('hello,world');
+    </script>
+{{/section}}
+<h1>index페이지</h1>
+<img src="/img/smile.png">

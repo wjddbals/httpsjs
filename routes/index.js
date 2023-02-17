@@ -1,10 +1,10 @@
 //index.js
 const express = require('express');
 const path = require('path');
+const Sungjuk = require('../models/Sungjuk');
+
+
 const router = express.Router();
-const SungJuk = require('../models/SungJuk')
-
-
 
 
 // show index page
@@ -14,14 +14,8 @@ router.get('/',(req,res)=>{
     res.render('index', {title: 'index'});
 });
 
-router.get('/sungjuk',async (req,res)=>{
+router.get('/sungjuk',(req,res)=>{
     res.render('sungjuk', {title: '성적처리'});
-});
-
-router.get('/showsungjuk',async (req,res)=>{
-    let sjs =new SungJuk().select().then(async result=>{return await result;});
-    console.log(await sjs);
-    res.render('showsungjuk', {title: '성적처리전체보기',sjs: await sjs});
 });
 
 router.post('/sungjuk', (req, res, next) => {
@@ -29,7 +23,6 @@ router.post('/sungjuk', (req, res, next) => {
     //console.log(req.body)
     //console.log(req.body.name, req.body.kor, req.body.eng, req.body.mat )
     let {name, kor, eng, mat} = req.body;
-    //--------
     kor = parseInt(kor);
     eng = parseInt(eng);
     mat = parseInt(mat);
@@ -44,11 +37,25 @@ router.post('/sungjuk', (req, res, next) => {
     console.log(tot, avg, grd);
 
     // 데이터베이스 처리 - sungjuk 테이블에 insert
-  new SungJuk(name,kor,eng,mat,tot,avg,grd).insert();
-  //--------
+    new Sungjuk(name,kor,eng,mat,tot,avg,grd).insert();
 
 
     res.redirect(304, '/');
+});
+
+router.get('/showsungjuk',async (req,res)=>{
+    let sjs = new Sungjuk().select().then(async result =>{return await result; });
+    console.log(await sjs);
+
+    res.render('showsungjuk', {title: '성적전체보기',sjs: await sjs});
+});
+
+router.get('/viewsungjuk',async (req,res)=>{
+    let sjno = req.query.sjno;  // querystring의 매개변수 추출
+    let sjs = new Sungjuk().selectOne(sjno).then(async result =>{return await result; });
+    console.log(await sjs);
+
+    res.render('viewsungjuk', {title: '성적전체보기',sjs: await sjs});
 });
 
 

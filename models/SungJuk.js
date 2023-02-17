@@ -45,6 +45,7 @@ class SungJuk {
     async select() {
         let conn = null;
         let result = null;
+        let sjs =[];
 
         try {
             conn = await oracledb.makeConn();
@@ -54,9 +55,10 @@ class SungJuk {
             let rs = result.resultSet;
             let row = null;
             while((row = await rs.getRow())) {
-                result = new SungJuk(row[1],row[2],row[3],row[4]);
-                result.sjno = row[0];
-                result.regdate = row[5];
+               let sj = new SungJuk(row[1],row[2],row[3],row[4]);
+                sj.sjno = row[0];
+               sj.regdate = row[5];
+               sjs.push(sj);
             }
         } catch (e) {
             console.log(e);
@@ -64,7 +66,7 @@ class SungJuk {
             await oracledb.closeConn(conn);
         }
 
-        return await result;
+        return await sjs;
     }
 
     // 성적 상세조회

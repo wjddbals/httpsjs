@@ -1,7 +1,7 @@
 const http =require('http');
 const path = require("path");
-const port=process.env.PORT || 3000;
-const html='text/html;charset=utf-8';
+const port = process.env.PORT || 3000;
+const html ='text/html;charset=utf-8';
 
 //localhost:3000요청시 처리, 요청path별 처리 세분화-routing
 //요청 path: /

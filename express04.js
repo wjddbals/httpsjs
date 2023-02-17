@@ -3,6 +3,7 @@ const path = require('path');
 const logger=require('morgan');//로그출력기
 const {engine} =require('express-handlebars');
 const bodyParser=require('body-parser');//폼처리기
+const oracledb=require('./models/Oracle');
 
 //라우팅 외부 작성
 const indexRouter = require('./routes/index');
@@ -39,10 +40,12 @@ app.use(logger('dev'));
 
 //미들웨어 등록
 app.use(express.json());
+
 app.use(express.urlencoded({extended: false}));//전송데이터에 대한 urlencoding위한 설정
 app.use(bodyParser.json()); //전송된 폼데이터는json형식
 //app.use(bodyParser.raw()); //
 //app.use(bodyParser.text()); //enctype이 text/plain일때 필요 비추
+oracledb.initConn();//오라클 instant client 초기화
 
 // index에 대한 route handler 지정
 app.use('/', indexRouter);
